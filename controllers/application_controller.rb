@@ -84,6 +84,7 @@ class ApplicationController < Sinatra::Base
           status 201
           redirect "/api/v1/tours/#{tour.id}", 303
         else
+          #flash[:notice] = "Error updating tour datails"
           halt 500, "Error updating tour details"
         end
       else # if country not yet exists in the DB, save it
@@ -92,6 +93,7 @@ class ApplicationController < Sinatra::Base
           status 201
           redirect "/api/v1/tours/#{db_tour.id}", 303
         else
+          #flash[:notice] = "Error saving tours to the database"
           halt 500, "Error saving tours to the database"
         end
       end
@@ -112,6 +114,26 @@ class ApplicationController < Sinatra::Base
       end
     end
 
+    &app_get_tours_id = lambda do
+      if session[:action] == :create
+        @results = JSON.parse(session[:results])
+      else
+        request_url = "#{settings.api.server}/#{settings.api_ver}/tours/#{params[:id]}"
+        options = { headers: { 'Content-Type' => 'application/json'}}
+        @results = HTTParty.get(request_url, options)
+
+        if @results.code != 200
+          flash[:notice] = "Cannot find any tours for #{params[:country]}"
+          redirect '/tours'
+        end
+      end
+
+      @id = params{:id}
+      @action = :update
+      @country = @results['country']
+      @tours = @results['tours']
+      slim: tours
+    end
   # API Routes
   get '/', &get_root
   get '/api/v1/tours', &get_tours
@@ -119,6 +141,7 @@ class ApplicationController < Sinatra::Base
   get '/api/v1/tours/:id', &get_tour_id
   post '/api/v1/tours', &post_tours
 
+<<<<<<< HEAD
   # Web app
 
 
@@ -157,6 +180,9 @@ class ApplicationController < Sinatra::Base
 # web routes
   get '/tours', &get_tours_web
   post '/tours', &post_tours_web
+=======
+  get '/tours/:id', &app_get_tours_id
+>>>>>>> View controller - first version
 
 
 end
