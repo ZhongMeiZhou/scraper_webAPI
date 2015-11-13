@@ -38,34 +38,6 @@ describe 'Getting tour listings' do
   end
 end
 
-#describe 'checking posts requests' do
-#  header = {'CONTENT-TYPE' => 'application/json'}
-
-#  it 'should push a post request and return a json' do
-#    body = {country: 'Honduras'}
-#    VCR.use_cassette('post_tours') do
-#      post 'api/v1/tours', body.to_json, header
-#    end
-#    last_response.must_be :ok?
-#    last_response.body.wont_equal ''
-#  end
-
-#  it 'should return 400 for bad json formatting' do
-#    body = 'abcdefghijklmnopqrstuvwz'
-#    post '/api/v1/tours', body, header
-#    last_response.must_be :bad_request?
-#  end
-
-#  it 'should return 404 for unknown country' do
-#    body = {country: 'zamunda'}
-#    VCR.use_cassette('post_zamunda') do
-#      post '/api/v1/tours', body.to_json, header
-#    end
-#    last_response.status.must_equal 404
-#  end
-
-#end
-
 describe 'checking country tours from DB' do
   it 'should find country tour information in DB' do
     header = { 'CONTENT_TYPE' => 'application/json' }
