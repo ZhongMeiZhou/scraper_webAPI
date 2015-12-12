@@ -147,7 +147,9 @@ class ApplicationController < Sinatra::Base
       # keep tours with specified categories
       tour_data.keep_if { |tour| tour_categories.include?(tour['category']) } unless tour_categories.empty?
 
-      [country, tour_data.size, tour_data]
+      {country: country, count: tour_data.size, tours: tour_data}
+
+      #[country, tour_data.size, tour_data]
     end
     #logger.info(search_results.to_json)
     search_results.to_json
