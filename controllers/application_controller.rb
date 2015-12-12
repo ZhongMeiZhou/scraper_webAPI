@@ -117,7 +117,7 @@ class ApplicationController < Sinatra::Base
     tour_price_min = !req['tour_price_min'].nil? ? req['tour_price_min'].to_i : 0
     tour_price_max = !req['tour_price_max'].nil? ? req['tour_price_max'].to_i : 99999
 
-    search_results = country_arr.map do |country|
+    search_results = country_arr.each_with_index.map do |country,*|
 
       begin
        country_search = get_tours(country).to_json
