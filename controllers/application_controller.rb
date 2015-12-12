@@ -112,8 +112,8 @@ class ApplicationController < Sinatra::Base
 
     req = JSON.parse(request.body.read)
     logger.info req
-    country_arr = !req['tour_countries'].nil? ? req['tour_countries'].split(', ') : []
-    tour_categories = !req['tour_categories'].nil? ? req['tour_categories'].split(', ') : []
+    country_arr = !req['tour_countries'].nil? ? req['tour_countries'] : []  #.split(', ')
+    tour_categories = !req['tour_categories'].nil? ? req['tour_categories'] : [] #.split(', ')
     tour_price_min = !req['tour_price_min'].nil? ? req['tour_price_min'].to_i : 0
     tour_price_max = !req['tour_price_max'].nil? ? req['tour_price_max'].to_i : 99999
 
