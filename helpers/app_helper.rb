@@ -2,6 +2,7 @@ require_relative '../models/lonely_planet_tours'
 
 module LP_APIHelpers
 	VERSION = '1.0.1'
+  CATEGORIES = ['Small Group Tours', 'Adventure', 'Sightseeing', 'Health & Wellness', 'History & Culture', 'Water Sports', 'Short Break', 'Cycling', 'Nature & Wildlife', 'Holidays, Festivals & Seasonal']  #can scrape from lonely planet in case this updates
 
 	def get_tours(country)
       Tours.new(country)
@@ -23,5 +24,13 @@ module LP_APIHelpers
       	'Country does not exist'
       end
       end
+    end
+
+    def strip_price(value)
+      value.gsub('$','').to_i
+    end
+
+    def price_in_range(price, min, max)
+      price >= min && price <= max
     end
 end
